@@ -4,7 +4,7 @@
 
 - [git](https://git-scm.com/downloads)
 - [nodejs](https://nodejs.org/en/download/)  
-- [Expo](https://expo.io/)
+- Expo
 > Tenha o app para Android ou IOS e crie uma conta  
 - Um editor de texto
 > recomendo [VSCode](https://code.visualstudio.com/) ou [Atom](atom.io)  
