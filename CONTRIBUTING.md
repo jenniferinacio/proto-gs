@@ -16,8 +16,11 @@ Utilize o **Terminal** ou o app [**Github Desktop**](https://desktop.github.com/
 `git commit -m "Descriptive message about what you did"`  
 `git push`  
 ### Utilizando Github desktop
-
-
+![Github Desktop](./imgs/github_desktop.png)
+> Verifique se os arquivos que deseja enviar estão selecionados  
+> 1 : Digite a mensagem do commit  
+> 2 : Clique em *Commit to master*  
+> 3 : O botão Fetch origin mudara para Push origin, clique
 ---
 ## Para enviar enviar suas alterações para o repositório principal  
 
