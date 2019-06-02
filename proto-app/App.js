@@ -1,26 +1,16 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import Routes from "./Routes";
+import { StatusBar, View, YellowBox } from "react-native";
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>Hello World!</Text>
-        <Text>proto-gs</Text>
-        <Text>(Protótipo Grupo Segunda)</Text>
-      </View>
-    );
-  }
-}
+YellowBox.ignoreWarnings([
+  "Warning: isMounted(...) is deprecated",
+  "Module RCTImageLoader"
+]);
 
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 36,
-    },
-  container: {
-    flex: 1,
-    backgroundColor: '#61deff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => (
+  <View style={{ flex: 1 }}>
+    <Routes />
+  </View>
+);
+
+export default App;
