@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import Home from "./screens/Home";
+import Login from "./screens/Login";
 import DashboardTabRoutes from "./screens/Dashboard/Routes";
 import { createStackNavigator } from "react-navigation";
 import CustomHeader from "./components/CustomHeader";
@@ -8,11 +8,10 @@ import HeaderStyles from "./headerStyles";
 
 const Routes = createStackNavigator(
   {
-    Home: {
-      screen: Home,
+    Login: {
+      screen: Login,
       navigationOptions: {
-        headerTitle: "Home",
-        header: props => <CustomHeader {...props} />
+        header: null
       }
     },
     Dashboard: {
@@ -23,7 +22,7 @@ const Routes = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "Login",
     navigationOptions: {
       ...HeaderStyles,
       animationEnabled: true
