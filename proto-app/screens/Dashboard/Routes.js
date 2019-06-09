@@ -6,6 +6,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 import { Ionicons } from '@expo/vector-icons';
+import Feed from "./Tabs/Feed/Feed";
 import Tab1Screen from "./Tabs/Tab1Screen";
 import Tab1Details from "./Tabs/Tab1Details";
 import Tab2Screen from "./Tabs/Tab2Screen";
@@ -16,6 +17,23 @@ let headerDefaultNavigationConfig = {
   header: props => <CustomHeader {...props} />,
   ...HeaderStyles
 };
+
+const FeedScreen = createStackNavigator(
+  {
+    FeedScreen: {
+      screen: Feed,
+      navigationOptions: {
+        headerLeft: null,
+        headerTitle: "Feed"
+      }
+    }
+  },
+  {
+    navigationOptions: {
+      ...headerDefaultNavigationConfig
+    }
+  }
+);
 
 const Tab1 = createStackNavigator(
   {
@@ -60,11 +78,11 @@ const Tab2 = createStackNavigator(
 
 const DashboardTabRoutes = TabNavigator(
   {
-    Tab1: Tab1,
-    Tab2: Tab2,
+    FeedScreen: FeedScreen,
+    Tab1: Tab1
   },
   {
-    initialRouteName: "Tab1",
+    initialRouteName: "FeedScreen",
     navigationOptions: ({ navigation }) => {
       const { routeName, routes } = navigation.state;
       let params = routes && routes[1] && routes[1].params;
@@ -72,12 +90,12 @@ const DashboardTabRoutes = TabNavigator(
         tabBarIcon: ({ focused, tintColor }) => {
           const { routeName } = navigation.state;
           let iconName;
-          if (routeName === 'Tab1') {
-            iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-          } else if (routeName === 'Tab2') {
-            iconName = `ios-options${focused ? '' : '-outline'}`;
+          if (routeName === 'FeedScreen') {
+            iconName = `ios-today`;
+        } else if (routeName === 'Tab1') {
+            iconName = `ios-settings`;
           }
-  
+
           // You can return any component that you like here! For demo we use an
           // icon component from react-native-vector-icons
           return <Ionicons name={iconName} size={25} color={tintColor} />;
@@ -89,8 +107,8 @@ const DashboardTabRoutes = TabNavigator(
       };
     },
     tabBarOptions: {
-      activeTintColor: "#6200EE",
-      inactiveTintColor: "#858585",
+      activeTintColor: "#428585",
+      inactiveTintColor: "#98dada",
       style: {
         height: 60,
         paddingVertical: 5,
