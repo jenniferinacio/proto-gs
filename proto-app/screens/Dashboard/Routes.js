@@ -12,6 +12,7 @@ import Tab1Details from "./Tabs/Tab1Details";
 import Tab2Screen from "./Tabs/Tab2Screen";
 import CustomHeader from "../../components/CustomHeader";
 import HeaderStyles from "../../headerStyles";
+import Recado from "./Tabs/Feed/Recado"
 
 let headerDefaultNavigationConfig = {
   header: props => <CustomHeader {...props} />,
@@ -35,21 +36,21 @@ const FeedScreen = createStackNavigator(
   }
 );
 
-const Tab1 = createStackNavigator(
+const RecadoScreen = createStackNavigator(
   {
-    Tab1: {
-      screen: Tab1Screen,
+    RecadoScreen: {
+      screen: Recado,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: "Tab 1 Screen"
+        headerTitle: "Recado"
       }
     },
-    Tab1Details: {
+    /*Tab1Details: {
       screen: Tab1Details,
       navigationOptions: {
         headerTitle: "Tab 1 without botton bar"
       }
-    }
+    }*/
   },
   {
     navigationOptions: {
@@ -78,8 +79,8 @@ const Tab2 = createStackNavigator(
 
 const DashboardTabRoutes = TabNavigator(
   {
-    FeedScreen: FeedScreen,
-    Tab1: Tab1
+    FeedScreen: Feed,
+    RecadoScreen: Recado
   },
   {
     initialRouteName: "FeedScreen",
@@ -91,9 +92,9 @@ const DashboardTabRoutes = TabNavigator(
           const { routeName } = navigation.state;
           let iconName;
           if (routeName === 'FeedScreen') {
+            iconName = `ios-home`;
+        } else if (routeName === 'RecadoScreen') {
             iconName = `ios-today`;
-        } else if (routeName === 'Tab1') {
-            iconName = `ios-settings`;
           }
 
           // You can return any component that you like here! For demo we use an
