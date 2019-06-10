@@ -15,19 +15,18 @@ export default class Example extends Component {
                 description: 'Lemos o livro O Pequeno Principe ',
                 lineColor: '#009688'
             }, {
-                time: '8:00',
-                title: 'Leitura',
-                description: 'Lemos o livro O Pequeno Principe ',
+                time: '9:30',
+                title: 'Hora do Lanche',
+                description: 'As crianças comeram arroz com feijão e frango xadrez ',
                 lineColor: '#009688'
             }, {
-                time: '8:00',
-                title: 'Leitura',
-                description: 'Lemos o livro O Pequeno Principe ',
-                lineColor: '#009688'
+                time: '10:00',
+                title: 'Hora do Soneca',
+
             }, {
-                time: '8:00',
-                title: 'Leitura',
-                description: 'Lemos o livro O Pequeno Principe ',
+                time: '11:00',
+                title: 'Desenho',
+                description: 'Pedimos para as crianças desenharem cartazes para Festa Junina ',
                 lineColor: '#009688'
             }
         ],
