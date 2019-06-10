@@ -24,7 +24,7 @@ const FeedScreen = createStackNavigator(
       screen: Feed,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: "Feed"
+        headerTitle: 'Feed'
       }
     }
   },
@@ -91,7 +91,7 @@ const DashboardTabRoutes = TabNavigator(
           const { routeName } = navigation.state;
           let iconName;
           if (routeName === 'FeedScreen') {
-            iconName = `ios-today`;
+            iconName = `ios-paper`;
         } else if (routeName === 'Tab1') {
             iconName = `ios-settings`;
           }

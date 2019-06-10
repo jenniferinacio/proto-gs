@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import Recado from "./Recado"
-
-import {createAppContainer, createBottomTabNavigator} from 'react-navigation';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Timeline from 'react-native-timeline-listview';
-
 export default class Example extends Component {
     constructor() {
         super()
@@ -39,10 +37,6 @@ export default class Example extends Component {
 
     }
 
-    // onEventPress(data){
-    // this.setState({selected: data})
-    //}
-
     renderSelected() {
         if (this.state.selected)
             return <Text style={{
@@ -53,7 +47,7 @@ export default class Example extends Component {
 
     render() {
         return (<View style={styles.container}>
-
+            <InputRecado isMonitor={global.TYPE_USER}></InputRecado>
             <Timeline style={styles.list} data={this.data} circleSize={20} circleColor='#f98b9c' lineColor='#f19e9e' timeStyle={{
                     textAlign: 'center',
                     backgroundColor: '#6ebcbc',
@@ -74,6 +68,32 @@ export default class Example extends Component {
                     borderRadius: 10
                 }} columnFormat='two-column'/>
         </View>);
+    }
+}
+
+function InputRecado(props) {
+    const isMonitor = props.isMonitor;
+    var post = '';
+    if (isMonitor) {
+        return (
+            <View style={styles.postArea} >
+            <TextInput style={styles.postText} onChangeText={(text) => {
+                this.post = text}}
+             placeholder='digite um recado'/>
+                <Icon style={{marginLeft:20}}
+                    name="ios-send"
+                    size={25}
+                    color='#79a3c6'
+                    // onPress={
+                    //     () => {
+                    //         alert(this.post)
+                    //     }
+                    // }
+                    />
+        </View>
+    )
+    } else {
+        return null;
     }
 }
 
@@ -101,5 +121,19 @@ const styles = StyleSheet.create({
     textDescription: {
         marginLeft: 10,
         color: 'gray'
+    },
+    postText: {
+        flexBasis: '85%',
+        borderWidth: 1,
+        borderColor: '#79a3c6',
+        height: 30,
+        color: '#000000'
+    },
+    postArea: {
+        flex: 1,
+        marginTop: 20,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        flexGrow: 0.1
     }
 });
