@@ -1,138 +1,127 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
 import Recado from "./Recado"
 import Icon from 'react-native-vector-icons/Ionicons';
+import { AppRegistry, StyleSheet, ActivityIndicator, ListView, Text, View, Alert, Platform, TouchableOpacity} from 'react-native';
+//import Recado from "./Recado";
+
 
 import Timeline from 'react-native-timeline-listview';
-export default class Example extends Component {
-    constructor() {
-        super()
-        //this.onEventPress = this.onEventPress.bind(this)
-        this.data = [
-            {
-                time: '8:00',
-                title: 'Leitura',
-                description: 'Lemos o livro O Pequeno Principe ',
-                lineColor: '#009688'
-            }, {
-                time: '9:30',
-                title: 'Hora do Lanche',
-                description: 'As crianças comeram arroz com feijão e frango xadrez ',
-                lineColor: '#009688'
-            }, {
-                time: '10:00',
-                title: 'Hora do Soneca',
-
-            }, {
-                time: '11:00',
-                title: 'Desenho',
-                description: 'Pedimos para as crianças desenharem cartazes para Festa Junina ',
-                lineColor: '#009688'
-            }
-        ],
-        this.state = {
-            selected: null
-        }
-
+export default class App extends React.Component   {
+ 
+    constructor(props) {
+      super(props);
+      this.state = {
+        isLoading: true
+      }
     }
-
-    renderSelected() {
-        if (this.state.selected)
-            return <Text style={{
-                    marginTop: 10
-                }}>Selected event: {this.state.selected.title}
-                at {this.state.selected.time}</Text>
+     
+    GetItem (tipo_de_atividade) {
+     
+    Alert.alert(tipo_de_atividade);
+     
     }
-
+     
+     
+    componentDidMount() {
+     
+      return fetch('https://coworkingsegunda.000webhostapp.com/consultaAtividade.php')
+        .then((response) => response.json())
+        .then((responseJson) => {
+          let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+          this.setState({
+            isLoading: false,
+            dataSource: ds.cloneWithRows(responseJson),
+          }, function() {
+            // In this block you can do something with new state.
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+     
+    ListViewItemSeparator = () => {
+      return (
+        <View
+          style={{
+     
+            height: .5,
+            width: "100%",
+            backgroundColor: "#000",
+     
+          }}
+        />
+      );
+    }
+     
+     
     render() {
-        return (<View style={styles.container}>
-            <InputRecado isMonitor={global.TYPE_USER}></InputRecado>
-            <Timeline style={styles.list} data={this.data} circleSize={20} circleColor='#f98b9c' lineColor='#f19e9e' timeStyle={{
-                    textAlign: 'center',
-                    backgroundColor: '#6ebcbc',
-                    color: 'white',
-                    padding: 5,
-                    borderRadius: 13
-                }} descriptionStyle={{
-                    color: 'gray'
-                }} options={{
-                    style: {
-                        paddingTop: 5
-                    }
-                }} innerCircle={'dot'} onEventPress={this.onEventPress} separator={false} detailContainerStyle={{
-                    marginBottom: 20,
-                    paddingLeft: 5,
-                    paddingRight: 5,
-                    backgroundColor: "#def9ff",
-                    borderRadius: 10
-                }} columnFormat='two-column'/>
-        </View>);
-    }
-}
-
-function InputRecado(props) {
-    const isMonitor = props.isMonitor;
-    var post = '';
-    if (isMonitor) {
+      if (this.state.isLoading) {
         return (
-            <View style={styles.postArea} >
-            <TextInput style={styles.postText} onChangeText={(text) => {
-                this.post = text}}
-             placeholder='digite um recado'/>
-                <Icon style={{marginLeft:20}}
-                    name="ios-send"
-                    size={25}
-                    color='#79a3c6'
-                    // onPress={
-                    //     () => {
-                    //         alert(this.post)
-                    //     }
-                    // }
-                    />
+          <View style={{flex: 1, paddingTop: 20}}>
+            <ActivityIndicator />
+          </View>
+        );
+      }
+     
+      return (
+     
+        <View style={styles.MainContainer}>
+     
+          <ListView
+     
+            dataSource={this.state.dataSource}
+     
+            renderSeparator= {this.ListViewItemSeparator}
+     
+            renderRow={(rowData) =>
+     
+           <View style={{flex:1, flexDirection: 'column'}} >
+     
+             <TouchableOpacity onPress={this.GetItem.bind(this, rowData.tipo_de_atividade)} >
+           
+             <Text style={styles.textViewContainer} >{'Descrição = ' + rowData.descricao}</Text>
+     
+             <Text style={styles.textViewContainer} >{'Data = ' + rowData.data}</Text>
+     
+             <Text style={styles.textViewContainer} >{'Horario = ' + rowData.horario}</Text>
+     
+             <Text style={styles.textViewContainer} >{'Duração = ' + rowData.duracao}</Text>
+     
+             </TouchableOpacity>
+     
+           </View>
+     
+            }
+          />
+     
         </View>
-    )
-    } else {
-        return null;
+      );
     }
-}
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingLeft: 20,
-        paddingRight: 20,
-        backgroundColor: 'white',
-        textAlign: 'center'
-
-    },
-    list: {
-        flex: 1,
-        marginTop: 10
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
-    descriptionContainer: {
-        flexDirection: 'row',
-        paddingRight: 50
-    },
-    textDescription: {
-        marginLeft: 10,
-        color: 'gray'
-    },
-    postText: {
-        flexBasis: '85%',
-        borderWidth: 1,
-        borderColor: '#79a3c6',
-        height: 30,
-        color: '#000000'
-    },
-    postArea: {
-        flex: 1,
-        marginTop: 20,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        flexGrow: 0.1
     }
-});
+     
+    const styles = StyleSheet.create({
+     
+    MainContainer :{
+     
+    // Setting up View inside content in Vertically center.
+    justifyContent: 'center',
+    flex:1,
+    paddingTop: (Platform.OS === 'ios') ? 20 : 0,
+    backgroundColor: '#fff',
+    padding: 5,
+     
+    },
+     
+    textViewContainer: {
+     
+     textAlignVertical:'center', 
+     padding:10,
+     fontSize: 20,
+     color: '#000',
+     
+    }
+     
+    });
+     
+    AppRegistry.registerComponent('App', () => App);

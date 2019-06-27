@@ -19,7 +19,7 @@
     "react-native-linear-gradient": "2.4.0",
     "react-native-paper": "1.8.0",
     "react-native-timeline-listview": "^0.2.3",
-    "react-navigation": "^2.0.1"
+    "react-navigation": "^2.18.3"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"
