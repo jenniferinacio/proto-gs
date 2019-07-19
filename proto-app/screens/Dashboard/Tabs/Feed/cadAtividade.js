@@ -7,11 +7,11 @@ export default class App extends Component<{}>
     constructor()
     {
         super();
- 
         this.state = { 
-          Descricao: '',
-          Id_Turma:'',
-          Id_Responsavel:'',
+            Tipo_de_atividade:'',
+            Descricao:'',
+            Data:'',
+            Horario:'',
           ActivityIndicator_Loading: false, 
         }
     }
@@ -19,7 +19,7 @@ export default class App extends Component<{}>
     {
         this.setState({ ActivityIndicator_Loading : true }, () =>
         {
-            fetch('https://coworkingsegunda.000webhostapp.com/appCadRecado.php',
+            fetch('https://coworkingsegunda.000webhostapp.com/appCadAtividade.php',
             {
                 method: 'POST',
                 headers: 
@@ -29,10 +29,12 @@ export default class App extends Component<{}>
                 },
                 body: JSON.stringify(
                 {
-                  Descricao : this.state.Descricao,
-                  Id_Responsavel: this.state.Id_Responsavel,
-                  Id_Turma: this.state.Id_Turma
+                    Tipo_de_atividade : this.state.Tipo_de_atividade,
+                    Descricao : this.state.Descricao,
+                    Data: this.state.Data,
+                    Horario: this.state.Horario
                 })
+ 
             }).then((response) => response.json()).then((responseJsonFromServer) =>
             {
                 alert(responseJsonFromServer);
@@ -49,26 +51,30 @@ export default class App extends Component<{}>
           return(
           <View style={styles.MainContainer}>
          
-              <Text   style = { styles.TextStyleClass } >Cadastro de Recados</Text>
+              <Text   style = { styles.TextStyleClass } >Cadastro de Atividades</Text>
               <Text> </Text>
               <Text> </Text>
 
                 <TextInput 
-                  placeholder = "ID. Responsável"
+                  placeholder = "Data"
                   style = { styles.TextInputStyleClass } 
                   underlineColorAndroid = "transparent"
-                  keyboardType='numeric'
-                  onChangeText = {(TextInputText) => this.setState({ Id_Responsavel: TextInputText })} />
+                  onChangeText = {(TextInputText) => this.setState({ Data: TextInputText })} />
 
                 <TextInput 
-                  placeholder = "No. Turma"
+                  placeholder = "Horario"
                   style = { styles.TextInputStyleClass } 
                   underlineColorAndroid = "transparent"
-                  keyboardType='numeric'
-                  onChangeText = {(TextInputText) => this.setState({ Id_Turma: TextInputText })} />
+                  onChangeText = {(TextInputText) => this.setState({ Horario: TextInputText })} />
 
                 <TextInput 
-                  placeholder = "Descrição do Recado"
+                  placeholder = "Tipo de Atividade"
+                  style = { styles.TextInputStyleClass } 
+                  underlineColorAndroid = "transparent"
+                  onChangeText = {(TextInputText) => this.setState({ Tipo_de_atividade: TextInputText })} />
+
+                <TextInput 
+                  placeholder = "Descrição da Atividade"
                   style = { styles.TextInputStyleClass } 
                   underlineColorAndroid = "transparent"
                   onChangeText = {(TextInputText) => this.setState({ Descricao: TextInputText })} />
@@ -78,16 +84,15 @@ export default class App extends Component<{}>
                   activeOpacity = { 0.5 } 
                   style = { styles.TouchableOpacityStyle } 
                   onPress = { this.Insert_Data_Into_MySQL }>
-                  <Text style = { styles.TextStyle }>Cadastrar Atividade</Text>
+                 <Text style = { styles.TextStyle }>Cadastrar Atividade</Text>
                 </TouchableOpacity>
                 {
-                  this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#009688' size='large'style=                   {styles.ActivityIndicatorStyle} /> : null
+                  this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#009688' size='large'style=                   {styles.ActivityIndicatorStyle} /> : null           
                 }
             </View>
         );
     }
 }
- 
 const styles = StyleSheet.create(
 {
     MainContainer:
