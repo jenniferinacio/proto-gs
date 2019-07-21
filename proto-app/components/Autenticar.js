@@ -22,5 +22,5 @@ function autenticarUsuario(user, password) {
 }
 
 export {
-    autenticarUsuario,
+    autenticarUsuario
 }

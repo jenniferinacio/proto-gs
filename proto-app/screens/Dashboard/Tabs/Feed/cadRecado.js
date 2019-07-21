@@ -1,110 +1,104 @@
 import React, { Component } from 'react';
 
 import { StyleSheet, View, TextInput, Text, ActivityIndicator, TouchableOpacity, Alert, Picker, Button } from 'react-native';
- 
+
 export default class App extends Component<{}>
 {
-    constructor()
-    {
-        super();
- 
-        this.state = { 
-          Descricao: '',
-          Id_Turma:'',
-          Id_Responsavel:'',
-          ActivityIndicator_Loading: false, 
-        }
+  constructor() {
+    super();
+
+    this.state = {
+      Descricao: '',
+      Id_Turma: '',
+      Id_Responsavel: '',
+      ActivityIndicator_Loading: false,
     }
-    Insert_Data_Into_MySQL = () =>
-    {
-        this.setState({ ActivityIndicator_Loading : true }, () =>
+  }
+  Insert_Data_Into_MySQL = () => {
+    this.setState({ ActivityIndicator_Loading: true }, () => {
+      fetch('https://coworkingsegunda.000webhostapp.com/appCadRecado.php',
         {
-            fetch('https://coworkingsegunda.000webhostapp.com/appCadRecado.php',
+          method: 'POST',
+          headers:
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(
             {
-                method: 'POST',
-                headers: 
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(
-                {
-                  Descricao : this.state.Descricao,
-                  Id_Responsavel: this.state.Id_Responsavel,
-                  Id_Turma: this.state.Id_Turma
-                })
-            }).then((response) => response.json()).then((responseJsonFromServer) =>
-            {
-                alert(responseJsonFromServer);
-                this.setState({ ActivityIndicator_Loading : false });
-            }).catch((error) =>
-            {
-                console.error(error);
-                this.setState({ ActivityIndicator_Loading : false});
-            });
+              Descricao: this.state.Descricao,
+              Id_Responsavel: this.state.Id_Responsavel,
+              Id_Turma: this.state.Id_Turma
+            })
+        }).then((response) => response.json()).then((responseJsonFromServer) => {
+          alert(responseJsonFromServer);
+          this.setState({ ActivityIndicator_Loading: false });
+        }).catch((error) => {
+          console.error(error);
+          this.setState({ ActivityIndicator_Loading: false });
         });
-    }
-    render()
-    {
-          return(
-          <View style={styles.MainContainer}>
-         
-              <Text   style = { styles.TextStyleClass } >Cadastro de Recados</Text>
-              <Text> </Text>
-              <Text> </Text>
+    });
+  }
+  render() {
+    return (
+      <View style={styles.MainContainer}>
 
-                <TextInput 
-                  placeholder = "ID. Responsável"
-                  style = { styles.TextInputStyleClass } 
-                  underlineColorAndroid = "transparent"
-                  keyboardType='numeric'
-                  onChangeText = {(TextInputText) => this.setState({ Id_Responsavel: TextInputText })} />
+        <Text style={styles.TextStyleClass} >Cadastro de Recados</Text>
+        <Text> </Text>
+        <Text> </Text>
 
-                <TextInput 
-                  placeholder = "No. Turma"
-                  style = { styles.TextInputStyleClass } 
-                  underlineColorAndroid = "transparent"
-                  keyboardType='numeric'
-                  onChangeText = {(TextInputText) => this.setState({ Id_Turma: TextInputText })} />
+        <TextInput
+          placeholder="ID. Responsável"
+          style={styles.TextInputStyleClass}
+          underlineColorAndroid="transparent"
+          keyboardType='numeric'
+          onChangeText={(TextInputText) => this.setState({ Id_Responsavel: TextInputText })} />
 
-                <TextInput 
-                  placeholder = "Descrição do Recado"
-                  style = { styles.TextInputStyleClass } 
-                  underlineColorAndroid = "transparent"
-                  onChangeText = {(TextInputText) => this.setState({ Descricao: TextInputText })} />
- 
-                <Text> </Text>
-                <TouchableOpacity 
-                  activeOpacity = { 0.5 } 
-                  style = { styles.TouchableOpacityStyle } 
-                  onPress = { this.Insert_Data_Into_MySQL }>
-                  <Text style = { styles.TextStyle }>Cadastrar Atividade</Text>
-                </TouchableOpacity>
-                {
-                  this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#009688' size='large'style=                   {styles.ActivityIndicatorStyle} /> : null
-                }
-            </View>
-        );
-    }
+        <TextInput
+          placeholder="No. Turma"
+          style={styles.TextInputStyleClass}
+          underlineColorAndroid="transparent"
+          keyboardType='numeric'
+          onChangeText={(TextInputText) => this.setState({ Id_Turma: TextInputText })} />
+
+        <TextInput
+          placeholder="Descrição do Recado"
+          style={styles.TextInputStyleClass}
+          underlineColorAndroid="transparent"
+          onChangeText={(TextInputText) => this.setState({ Descricao: TextInputText })} />
+
+        <Text> </Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.TouchableOpacityStyle}
+          onPress={this.Insert_Data_Into_MySQL}>
+          <Text style={styles.TextStyle}>Cadastrar Atividade</Text>
+        </TouchableOpacity>
+        {
+          this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#009688' size='large' style={styles.ActivityIndicatorStyle} /> : null
+        }
+      </View>
+    );
+  }
 }
- 
+
 const styles = StyleSheet.create(
-{
+  {
     MainContainer:
     {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 20
-
+      padding: 20,
+      backgroundColor: '#fff'
     },
- 
+
     TextStyleClass:
     {
 
       textAlign: 'center',
       height: 40,
-      backgroundColor : "#fff",
+      backgroundColor: "#fff",
       marginBottom: 10,
       width: '95%',
       color: '#009688',
@@ -115,33 +109,33 @@ const styles = StyleSheet.create(
 
       textAlign: 'center',
       height: 40,
-      backgroundColor : "#fff",
+      backgroundColor: "#fff",
       borderWidth: 1,
       borderColor: '#009688',
-      borderRadius: 7 ,
+      borderRadius: 7,
       marginBottom: 10,
       width: '95%'
     },
- 
+
     TouchableOpacityStyle:
-   {
-      paddingTop:10,
-      paddingBottom:10,
-      backgroundColor:'#009688',
+    {
+      paddingTop: 10,
+      paddingBottom: 10,
+      backgroundColor: '#009688',
       marginBottom: 20,
       width: '90%'
- 
-    },
- 
-    TextStyle:
-    {
-        color: '#fff',
-        textAlign: 'center',
-        fontSize: 18
+
     },
 
-    ActivityIndicatorStyle:{
-      
+    TextStyle:
+    {
+      color: '#fff',
+      textAlign: 'center',
+      fontSize: 18
+    },
+
+    ActivityIndicatorStyle: {
+
       position: 'absolute',
       left: 0,
       right: 0,
@@ -149,6 +143,6 @@ const styles = StyleSheet.create(
       bottom: 0,
       alignItems: 'center',
       justifyContent: 'center'
-    
-  }
-});
+
+    }
+  });
