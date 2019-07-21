@@ -1,138 +1,110 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
-import Recado from "./Recado"
+/*React Native TimeLine ListView*/
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
+import Timeline from 'react-native-timeline-listview';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Timeline from 'react-native-timeline-listview';
-export default class Example extends Component {
-    constructor() {
-        super()
-        //this.onEventPress = this.onEventPress.bind(this)
-        this.data = [
-            {
-                time: '8:00',
-                title: 'Leitura',
-                description: 'Lemos o livro O Pequeno Principe ',
-                lineColor: '#009688'
-            }, {
-                time: '9:30',
-                title: 'Hora do Lanche',
-                description: 'As crianças comeram arroz com feijão e frango xadrez ',
-                lineColor: '#009688'
-            }, {
-                time: '10:00',
-                title: 'Hora do Soneca',
+export default class BasicTimeLine extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isLoading: true };
+    this.data = [{}];
+  }
+  componentDidMount() {
+    return fetch('https://coworkingsegunda.000webhostapp.com/appListAtividade.php')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.data = responseJson
+        this.setState({
+          isLoading: false
+        }, function () {
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  render() {
 
-            }, {
-                time: '11:00',
-                title: 'Desenho',
-                description: 'Pedimos para as crianças desenharem cartazes para Festa Junina ',
-                lineColor: '#009688'
-            }
-        ],
-        this.state = {
-            selected: null
-        }
+    // botões apareces se 'monitor'
+    let cadButtons;
+    if (global.TYPE_USER) {
 
-    }
+      cadButtons = <View style={styles.buttonsArea}>
+        <TouchableOpacity style={styles.btns}
+          onPress={() => {
+            this.props.navigation.navigate("screenCadAtividade")
+          }}><Text style={styles.textStyle}>Cadastrar Atividade</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.btns}
+          onPress={() => {
+            this.props.navigation.navigate("screenCadRecado")
+          }}><Text style={styles.textStyle}>Cadastrar Recado</Text></TouchableOpacity>
+      </View>
 
-    renderSelected() {
-        if (this.state.selected)
-            return <Text style={{
-                    marginTop: 10
-                }}>Selected event: {this.state.selected.title}
-                at {this.state.selected.time}</Text>
-    }
-
-    render() {
-        return (<View style={styles.container}>
-            <InputRecado isMonitor={global.TYPE_USER}></InputRecado>
-            <Timeline style={styles.list} data={this.data} circleSize={20} circleColor='#f98b9c' lineColor='#f19e9e' timeStyle={{
-                    textAlign: 'center',
-                    backgroundColor: '#6ebcbc',
-                    color: 'white',
-                    padding: 5,
-                    borderRadius: 13
-                }} descriptionStyle={{
-                    color: 'gray'
-                }} options={{
-                    style: {
-                        paddingTop: 5
-                    }
-                }} innerCircle={'dot'} onEventPress={this.onEventPress} separator={false} detailContainerStyle={{
-                    marginBottom: 20,
-                    paddingLeft: 5,
-                    paddingRight: 5,
-                    backgroundColor: "#def9ff",
-                    borderRadius: 10
-                }} columnFormat='two-column'/>
-        </View>);
-    }
-}
-
-function InputRecado(props) {
-    const isMonitor = props.isMonitor;
-    var post = '';
-    if (isMonitor) {
-        return (
-            <View style={styles.postArea} >
-            <TextInput style={styles.postText} onChangeText={(text) => {
-                this.post = text}}
-             placeholder='digite um recado'/>
-                <Icon style={{marginLeft:20}}
-                    name="ios-send"
-                    size={25}
-                    color='#79a3c6'
-                    // onPress={
-                    //     () => {
-                    //         alert(this.post)
-                    //     }
-                    // }
-                    />
-        </View>
-    )
     } else {
-        return null;
+      cadButtons = null;
     }
+
+    return (
+      <View style={styles.container}>
+        <Text
+          style={{
+            padding: 16,
+            fontSize: 20,
+            textAlign: 'center',
+            fontWeight: 'bold',
+          }}>
+          Linha do tempo de atividades
+        </Text>
+
+        {cadButtons}
+
+        <Timeline style={styles.list} data={this.data} circleSize={20} circleColor='#f98b9c' lineColor='#f19e9e' timeStyle={{
+          textAlign: 'center',
+          backgroundColor: '#6ebcbc',
+          color: 'white',
+          padding: 5,
+          borderRadius: 13
+        }} descriptionStyle={{
+          color: 'gray'
+        }} options={{
+          style: {
+            paddingTop: 5
+          }
+        }} innerCircle={'dot'} onEventPress={this.onEventPress} separator={false} detailContainerStyle={{
+          marginBottom: 20,
+          paddingLeft: 5,
+          paddingRight: 5,
+          backgroundColor: "#def9ff",
+          borderRadius: 10
+        }} columnFormat='two-column' />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingLeft: 20,
-        paddingRight: 20,
-        backgroundColor: 'white',
-        textAlign: 'center'
-
-    },
-    list: {
-        flex: 1,
-        marginTop: 10
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: 'bold'
-    },
-    descriptionContainer: {
-        flexDirection: 'row',
-        paddingRight: 50
-    },
-    textDescription: {
-        marginLeft: 10,
-        color: 'gray'
-    },
-    postText: {
-        flexBasis: '85%',
-        borderWidth: 1,
-        borderColor: '#79a3c6',
-        height: 30,
-        color: '#000000'
-    },
-    postArea: {
-        flex: 1,
-        marginTop: 20,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        flexGrow: 0.1
-    }
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: 'white',
+  },
+  buttonsArea: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0.2,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  btns: {
+    alignItems: 'center',
+    backgroundColor: '#009688',
+    color: '#ffff',
+    width: '45%',
+    height: 40
+  },
+  textStyle: {
+    textAlign: 'center',
+    color: '#fff'
+  }
 });
