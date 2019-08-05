@@ -13,10 +13,12 @@ import Tab2Screen from "./Tabs/Tab2Screen";
 import CustomHeader from "../../components/CustomHeader";
 import HeaderStyles from "../../headerStyles";
 
+
 let headerDefaultNavigationConfig = {
   header: props => <CustomHeader {...props} />,
   ...HeaderStyles
 };
+
 
 const FeedScreen = createStackNavigator(
   {

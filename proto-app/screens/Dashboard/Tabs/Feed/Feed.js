@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
 import Timeline from 'react-native-timeline-listview';
 import Icon from 'react-native-vector-icons/Ionicons';
+import cadastro from '../../../Login'
 
 export default class BasicTimeLine extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class BasicTimeLine extends Component {
 
     // botões apareces se 'monitor'
     let cadButtons;
-    if (global.TYPE_USER) {
+    if (cadastro) {
 
       cadButtons = <View style={styles.buttonsArea}>
         <TouchableOpacity style={styles.btns}
