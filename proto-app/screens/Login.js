@@ -1,17 +1,49 @@
 import React, { Component } from 'react';
 import { StyleSheet, Button, View, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, StatusBar } from 'react-native';
-import { autenticarUsuario } from '../components/Autenticar'
+import { autenticar_Usuario } from '../components/Autenticar'
 
 export default class Login extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            username: '',
-            password: '',
+            email: '',
+            senha: '',
         }
     }
-
+    autenticar_Usuario = () =>{
+       fetch('https://coworkingsegunda.000webhostapp.com/appVerificaUsuario.php'+ global.EMAIL, {
+         method: 'POST',
+         headers: {
+           'Accept': 'application/json',
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({
+           email: this.state.email,
+           senha: this.state.senha
+         })
+       }).then((response) => response.json())
+             .then((responseJson) => {
+       
+               // If server response message same as Data Matched
+              if(responseJson == 'Login Feito com Sucesso')
+               {
+       
+                   //Then open Profile activity and send user email to profile activity.
+                   this.props.navigation.navigate('Dashboard', email = global.EMAIL);
+       
+               }
+               else if (responseJson == 'Sucesso') {
+                this.props.navigation.navigate('Dashboard', email = global.EMAIL);
+               } else{
+                    "Email ou Senha Incorretos"
+               }
+       
+             }).catch((error) => {
+               console.error(error);
+             });
+        
+         }
     render() {
         return (
             <KeyboardAvoidingView  behavior={'padding'} style={styles.container}>
@@ -35,7 +67,7 @@ export default class Login extends Component {
                     autoCapitalize='none'
                     autoCorrect={false}
                     onChangeText={(text) => {
-                        this.setState({username : text})
+                        this.setState({email : text})
                     }}
                     />
                     <TextInput
@@ -46,7 +78,7 @@ export default class Login extends Component {
                     style={styles.input}
                     ref={(input) => this.passwordInput= input}
                     onChangeText={(text) => {
-                        this.setState({password : text})
+                        this.setState({senha : text})
                     }}
                     />
                     <View style={styles.buttonContainer}>
@@ -55,7 +87,7 @@ export default class Login extends Component {
                             title="Entrar"
                             onPress={
                                 () => {
-                                    if (autenticarUsuario(this.state.username, this.state.password))
+                                    if (autenticar_Usuario(this.state.email, this.state.senha))
                                     {
                                         this.props.navigation.navigate("Dashboard")
                                     }

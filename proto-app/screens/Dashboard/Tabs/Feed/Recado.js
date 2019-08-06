@@ -19,19 +19,34 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        return fetch('https://coworkingsegunda.000webhostapp.com/consultaRecados.php').then((response) => response.json()).then((responseJson) => {
-            let ds = new ListView.DataSource({
-                rowHasChanged: (r1, r2) => r1 !== r2
-            });
-            this.setState({
-                isLoading: false,
-                dataSource: ds.cloneWithRows(responseJson)
-            }, function() {
-                // In this block you can do something with new state.
-            });
-        }).catch((error) => {
-            console.error(error);
-        });
+        if(global.EMAIL != null){
+            return fetch('https://coworkingsegunda.000webhostapp.com/consultaRecados.php').then((response) => response.json()).then((responseJson) => {
+                let ds = new ListView.DataSource({
+                    rowHasChanged: (r1, r2) => r1 !== r2
+                });
+                this.setState({
+                    isLoading: false,
+                    dataSource: ds.cloneWithRows(responseJson)
+                }, function() {
+                    // In this block you can do something with new state.
+                });
+                
+            })
+        }else{
+            return fetch('https://coworkingsegunda.000webhostapp.com/appConsultaRecadosPai.php' + global.EMAIL).then((response) => response.json()).then((responseJsonFromServer) => {
+                let ds = new ListView.DataSource({
+                    rowHasChanged: (r1, r2) => r1 !== r2
+                });
+                this.setState({
+                    isLoading: false,
+                    dataSource: ds.cloneWithRows(responseJsonFromServer)
+                }, function() {
+                    // In this block you can do something with new state.
+                });
+             }).catch((error) => {
+                console.error(error);
+           });
+       }  
     }
 
     ListViewItemSeparator = () => {

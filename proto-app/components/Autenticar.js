@@ -4,11 +4,13 @@ const PARENTE = 0;
 global.TYPE_USER = 0;   //variável global usada para definir o tipo de login
 
 
-function autenticarUsuario(user, password) {
+function autenticar_Usuario(user, password) {
     if (user == '' || password == '') {
         alert('usuário ou senha incorretos');
         return false;
     } else {
+        
+
         if (user.search('P') != -1) {
             global.TYPE_USER = PARENTE;
         } else if (user.search('M') != -1) {
@@ -22,5 +24,5 @@ function autenticarUsuario(user, password) {
 }
 
 export {
-    autenticarUsuario
+    autenticar_Usuario
 }
