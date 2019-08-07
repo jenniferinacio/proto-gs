@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import { StyleSheet, Button, View, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, StatusBar } from 'react-native';
 import { autenticar_Usuario } from '../components/Autenticar'
-=======
 import { StyleSheet, Button, View, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, StatusBar,Alert } from 'react-native';
 import cadButtons from '../screens/Dashboard/Tabs/Feed/Feed';
 
 
->>>>>>> ce1c0d3... Arrumando a tela de Login e Recado
 
 export default class Login extends Component {
     static navigationOptions = {
@@ -18,7 +15,6 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props)
-<<<<<<< HEAD
         this.state = {
             email: '',
             senha: '',
@@ -57,68 +53,6 @@ export default class Login extends Component {
              });
         
          }
-=======
-        
-        this.inputRefs={};
-
-		this.state = {
-	    email: '',
-        senha: '',
-        isLoading: false,			
-     } 
-      this.state ={
-      datasource:[]
-     }
-    
-    }
-   
-  // Método que envia os dados ao PHP no formato JSON para verificar o usuario
-  verificar_Usuario = () =>{
-
-    
-        fetch('https://coworkingsegunda.000webhostapp.com/appVerificaUsuario.php',
-        {
-            method: 'POST',
-            headers: 
-            {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(
-            {
-                email: this.state.email,
-                senha: this.state.senha  
-            })
-        }).then((response) => response.json())
-        .then((responseJson) => {
-   
-         if(responseJson == 'Login Feito com Sucesso')
-          {//parente
-              global.EMAIL = this.state.email;
-              this.props.navigation.navigate('Dashboard');
-              
-              
-          }
-        else if(responseJson == 'Sucesso')
-        {   //monitor
-            this.props.navigation.navigate('Dashboard');
-            
-            
-        }
-        else 
-            {
-                Alert.alert ("Email ou Senha Invalidos");
-            }
-            
-        }).catch((error) =>
-        {
-            console.error(error);
-
-            this.setState({ isLoading : false});
-        });
-    
-  }
->>>>>>> ce1c0d3... Arrumando a tela de Login e Recado
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -163,11 +97,7 @@ export default class Login extends Component {
                             title="Entrar"
                             onPress={
                                 () => {
-<<<<<<< HEAD
                                     if (autenticar_Usuario(this.state.email, this.state.senha))
-=======
-                                    if (this.verificar_Usuario(this.state.email, this.state.senha))
->>>>>>> ce1c0d3... Arrumando a tela de Login e Recado
                                     {
                                         this.props.navigation.navigate("Dashboard")
                                     }

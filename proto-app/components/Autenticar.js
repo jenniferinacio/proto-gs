@@ -7,7 +7,6 @@ global.EMAIL = '';
 
 function autenticar_Usuario() {
 
-<<<<<<< HEAD
 function autenticar_Usuario(user, password) {
     if (user == '' || password == '') {
         alert('usuário ou senha incorretos');
@@ -23,7 +22,6 @@ function autenticar_Usuario(user, password) {
             alert('erro')
             return false;
         }
-=======
     
     fetch('https://coworkingsegunda.000webhostapp.com/appVerificaUsuario.php',
     {
@@ -55,7 +53,6 @@ function autenticar_Usuario(user, password) {
         this.props.navigation.navigate('Dashboard');
         
         
->>>>>>> ce1c0d3... Arrumando a tela de Login e Recado
     }
     else 
         {
