@@ -29,7 +29,7 @@ export default class BasicTimeLine extends Component {
 
     // botões apareces se 'monitor'
     let cadButtons;
-    if (cadastro) {
+    if (global.TYPE_USER) {
 
       cadButtons = <View style={styles.buttonsArea}>
         <TouchableOpacity style={styles.btns}
@@ -37,6 +37,10 @@ export default class BasicTimeLine extends Component {
             this.props.navigation.navigate("screenCadAtividade")
           }}><Text style={styles.textStyle}>Cadastrar Atividade</Text></TouchableOpacity>
         <TouchableOpacity style={styles.btns}
+          onPress={() => {
+            this.props.navigation.navigate("screenCadOcorrencia")
+          }}><Text style={styles.textStyle}>Cadastrar Ocorrência</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.bt}
           onPress={() => {
             this.props.navigation.navigate("screenCadRecado")
           }}><Text style={styles.textStyle}>Cadastrar Recado</Text></TouchableOpacity>
@@ -101,6 +105,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#009688',
     color: '#ffff',
+    width: '45%',
+    height: 40
+  },
+  bt: {
+    
+    backgroundColor: '#009688',
+    color: '#ffff',
+    flexDirection: 'column',
     width: '45%',
     height: 40
   },

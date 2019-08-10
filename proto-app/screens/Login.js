@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, View, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, StatusBar } from 'react-native';
-import { autenticar_Usuario } from '../components/Autenticar'
-import { StyleSheet, Button, View, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, StatusBar,Alert } from 'react-native';
-import cadButtons from '../screens/Dashboard/Tabs/Feed/Feed';
+import { StyleSheet, Button, View, Image, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Alert, StatusBar } from 'react-native';
+const MONITOR = 1;
+const PARENTE = 0;
 
-
-
+global.TYPE_USER = 0;   
+global.EMAIL = '';
 export default class Login extends Component {
     static navigationOptions = {
         title: 'Login',
         header: null,
         
     }
-
     constructor(props) {
         super(props)
         this.state = {
@@ -20,39 +18,59 @@ export default class Login extends Component {
             senha: '',
         }
     }
-    autenticar_Usuario = () =>{
-       fetch('https://coworkingsegunda.000webhostapp.com/appVerificaUsuario.php'+ global.EMAIL, {
-         method: 'POST',
-         headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({
-           email: this.state.email,
-           senha: this.state.senha
-         })
-       }).then((response) => response.json())
-             .then((responseJson) => {
+ 
+autenticar_Usuario = () =>
+    {
+    if (this.state.email == '' || this.state.senha == '') {
+        Alert.alert('usuário ou senha incorretos');
+    } else {
        
-               // If server response message same as Data Matched
-              if(responseJson == 'Login Feito com Sucesso')
-               {
-       
-                   //Then open Profile activity and send user email to profile activity.
-                   this.props.navigation.navigate('Dashboard', email = global.EMAIL);
-       
-               }
-               else if (responseJson == 'Sucesso') {
-                this.props.navigation.navigate('Dashboard', email = global.EMAIL);
-               } else{
-                    "Email ou Senha Incorretos"
-               }
-       
-             }).catch((error) => {
-               console.error(error);
-             });
-        
-         }
+    
+        fetch('https://coworkingsegunda.000webhostapp.com/appVerificaUsuario.php',
+        {
+            method: 'POST',
+            headers: 
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(
+            {
+                email: this.state.email,
+                senha: this.state.senha  
+            })
+        }).then((response) => response.json())
+        .then((responseJson) => {
+
+        if(responseJson == 'Pai')
+        {//parente
+            global.EMAIL = this.state.email;
+            global.TYPE_USER = 0;
+            this.props.navigation.navigate('Dashboard');
+            
+            
+        }
+        else if(responseJson == 'Monitor')
+        {   //monitor
+            global.TYPE_USER = 1;
+            this.props.navigation.navigate('Dashboard');
+            
+            
+        }
+        else 
+            {
+                Alert.alert ("Email ou Senha Invalidos");
+            }
+            
+        }).catch((error) =>
+        {
+            console.error(error);
+
+            this.setState({ isLoading : false});
+        });
+    }
+}
+
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -67,43 +85,26 @@ export default class Login extends Component {
                 <View style={styles.containerInputs}>
                     <StatusBar
                     barStyle='light-content'/>
-                    <TextInput
-                    placeholder='Usuário ou Email'
-                    placeholderTextColor='#f5f6fa'
-                    returnKeyType='next'
-                    style={styles.input}
-                    onSubmitEditing={() => this.passwordInput.focus()}
-                    keyboardType='email-address'
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    onChangeText={(text) => {
-                        this.setState({email : text})
-                    }}
-                    />
-                    <TextInput
-                    placeholder='Senha'
-                    placeholderTextColor='#f5f6fa'
-                    secureTextEntry
-                    returnKeyType='go'
-                    style={styles.input}
-                    ref={(input) => this.passwordInput= input}
-                    onChangeText={(text) => {
-                        this.setState({senha : text})
-                    }}
-                    />
+                    
+					<TextInput placeholder='Email' 
+					style={styles.TextInput}
+					onChangeText={email => this.setState({email})}/>
+          
+					<TextInput placeholder='Senha' 
+						style={styles.TextInput} 
+						secureTextEntry
+						onChangeText={senha => this.setState({senha})}
+					/>
+                
                     <View style={styles.buttonContainer}>
-                        <Button
-                            color="#fff"
-                            title="Entrar"
-                            onPress={
-                                () => {
-                                    if (autenticar_Usuario(this.state.email, this.state.senha))
-                                    {
-                                        this.props.navigation.navigate("Dashboard")
-                                    }
-                                }
-                            }
-                          ></Button>
+                     <TouchableOpacity 
+						activeOpacity = { 0.5 } 
+						style = { styles.TouchableOpacityStyle } 
+						onPress = { this.autenticar_Usuario }>
+
+                    <Text style = { styles.TextStyle }>Acessar</Text>
+
+                </TouchableOpacity>
                   </View>
                 </View>
             </KeyboardAvoidingView>
@@ -116,6 +117,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#6ebcbc',
         justifyContent: 'center',
     },
+	
+	TouchableOpacityStyle:
+   {
+      paddingTop:10,
+      paddingBottom:10,
+      backgroundColor:'#009688',
+      marginBottom: 20,
+      width: '100%',
+      textAlign: 'left'
+ 
+    },
+	
     logoContainer: {
         alignItems: 'center',
         flexGrow: 1,

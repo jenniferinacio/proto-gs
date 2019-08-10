@@ -2,21 +2,22 @@ import React, { Component } from 'react';
 
 import { StyleSheet, View, TextInput, Text, ActivityIndicator, TouchableOpacity, Alert, Picker, Button } from 'react-native';
 
-export default class App extends Component<{}>
+export default class CadAtividade extends Component<{}>
 {
   constructor() {
     super();
-
     this.state = {
       Descricao: '',
-      Id_Turma: '',
-      Id_Responsavel: '',
+      Id_Aluno:'',
+      Data: '',
+      Horario:'',
+      Responsavel: '',
       ActivityIndicator_Loading: false,
     }
   }
-  Insert_Data_Into_MySQL = () => {
+  CadOcorrencia = () => {
     this.setState({ ActivityIndicator_Loading: true }, () => {
-      fetch('https://coworkingsegunda.000webhostapp.com/appCadRecado.php',
+      fetch('https://coworkingsegunda.000webhostapp.com/appCadOcorrencia.php',
         {
           method: 'POST',
           headers:
@@ -27,9 +28,12 @@ export default class App extends Component<{}>
           body: JSON.stringify(
             {
               Descricao: this.state.Descricao,
-              Id_Responsavel: this.state.Id_Responsavel,
-              Id_Turma: this.state.Id_Turma
+              Id_aluno: this.state.Id_Aluno,
+              Data: this.state.Data,
+              Horario: this.state.Horario,
+              Responsavel: this.state.Responsavel
             })
+
         }).then((response) => response.json()).then((responseJsonFromServer) => {
           alert(responseJsonFromServer);
           this.setState({ ActivityIndicator_Loading: false });
@@ -43,36 +47,48 @@ export default class App extends Component<{}>
     return (
       <View style={styles.MainContainer}>
 
-        <Text style={styles.TextStyleClass} >Cadastro de Recados</Text>
+        <Text style={styles.TextStyleClass} >Cadastro de Ocorrências</Text>
         <Text> </Text>
         <Text> </Text>
 
         <TextInput
-          placeholder="ID. Responsável"
-          style={styles.TextInputStyleClass}
-          underlineColorAndroid="transparent"
-          keyboardType='numeric'
-          onChangeText={(TextInputText) => this.setState({ Id_Responsavel: TextInputText })} />
-
-        <TextInput
-          placeholder="No. Turma"
-          style={styles.TextInputStyleClass}
-          underlineColorAndroid="transparent"
-          keyboardType='numeric'
-          onChangeText={(TextInputText) => this.setState({ Id_Turma: TextInputText })} />
-
-        <TextInput
-          placeholder="Descrição do Recado"
+          placeholder="Descrição da Ocorrência"
           style={styles.TextInputStyleClass}
           underlineColorAndroid="transparent"
           onChangeText={(TextInputText) => this.setState({ Descricao: TextInputText })} />
 
+        <TextInput
+          placeholder="Id do Aluno"
+          style={styles.TextInputStyleClass}
+          underlineColorAndroid="transparent"
+          keyboardType='numeric'
+          onChangeText={(TextInputText) => this.setState({ Id_Aluno: TextInputText })} />
+
+        <TextInput
+          placeholder="Responsavel por anotar a Ocorrência"
+          style={styles.TextInputStyleClass}
+          underlineColorAndroid="transparent"
+          onChangeText={(TextInputText) => this.setState({ Responsavel: TextInputText })} />
+
+        <TextInput
+          placeholder="Data"
+          style={styles.TextInputStyleClass}
+          underlineColorAndroid="transparent"
+          onChangeText={(TextInputText) => this.setState({ Data: TextInputText })} />
+
+        <TextInput
+          placeholder="Horario"
+          style={styles.TextInputStyleClass}
+          underlineColorAndroid="transparent"
+          onChangeText={(TextInputText) => this.setState({ Horario: TextInputText })} />
+
         <Text> </Text>
+
         <TouchableOpacity
           activeOpacity={0.5}
           style={styles.TouchableOpacityStyle}
-          onPress={this.Insert_Data_Into_MySQL}>
-          <Text style={styles.TextStyle}>Cadastrar Recado</Text>
+          onPress={this.CadOcorrencia}>
+          <Text style={styles.TextStyle}>Cadastrar Ocorrência</Text>
         </TouchableOpacity>
         {
           this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#009688' size='large' style={styles.ActivityIndicatorStyle} /> : null
@@ -81,7 +97,6 @@ export default class App extends Component<{}>
     );
   }
 }
-
 const styles = StyleSheet.create(
   {
     MainContainer:
