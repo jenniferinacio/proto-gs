@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, TextInput, Text, ActivityIndicator, TouchableOpacity, Alert, Picker, Button } from 'react-native';
+import { StyleSheet, View, TextInput, Text, ActivityIndicator, TouchableOpacity, Alert, Picker, Button, KeyboardAvoidingView } from 'react-native';
 
 export default class CadAtividade extends Component<{}>
 {
@@ -43,8 +43,8 @@ export default class CadAtividade extends Component<{}>
   }
   render() {
     return (
+        <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
       <View style={styles.MainContainer}>
-
         <Text style={styles.TextStyleClass} >Cadastro de Atividades</Text>
         <Text> </Text>
         <Text> </Text>
@@ -82,13 +82,19 @@ export default class CadAtividade extends Component<{}>
         </TouchableOpacity>
         {
           this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#8C76E8' size='large' style={styles.ActivityIndicatorStyle} /> : null
-        }
+          }
       </View>
+          </KeyboardAvoidingView>
     );
   }
 }
 const styles = StyleSheet.create(
   {
+    container: {
+      flex: 1,
+      backgroundColor: '#8C76E8',
+      justifyContent: 'center',
+    },
     MainContainer:
     {
       flex: 1,
