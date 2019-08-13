@@ -35,15 +35,19 @@ export default class BasicTimeLine extends Component {
         <TouchableOpacity style={styles.btns}
           onPress={() => {
             this.props.navigation.navigate("screenCadAtividade")
-          }}><Text style={styles.textStyle}>Cadastrar Atividade</Text></TouchableOpacity>
+          }}><Text style={styles.textStyle}>
+            <Icon name={'ios-stopwatch'} size={20}/>
+             Atividade</Text></TouchableOpacity>
         <TouchableOpacity style={styles.btns}
           onPress={() => {
             this.props.navigation.navigate("screenCadOcorrencia")
-          }}><Text style={styles.textStyle}>Cadastrar Ocorrência</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.bt}
+          }}><Text style={styles.textStyle}><Icon name={'ios-information-circle-outline'} size={20}/>
+             Ocorrência</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.btns}
           onPress={() => {
             this.props.navigation.navigate("screenCadRecado")
-          }}><Text style={styles.textStyle}>Cadastrar Recado</Text></TouchableOpacity>
+          }}><Text style={styles.textStyle}><Icon name={'ios-today'} size={20}/>
+             Recado</Text></TouchableOpacity>
       </View>
 
     } else {
@@ -54,7 +58,6 @@ export default class BasicTimeLine extends Component {
       <View style={styles.container}>
         <Text
           style={{
-            padding: 16,
             fontSize: 20,
             textAlign: 'center',
             fontWeight: 'bold',
@@ -63,13 +66,9 @@ export default class BasicTimeLine extends Component {
         </Text>
 
         {cadButtons}
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
-        <Text></Text>
-        <Timeline style={styles.list} data={this.data} circleSize={20} circleColor='#f98b9c' lineColor='#f19e9e' timeStyle={{
+        <Timeline style={styles.list} data={this.data} circleSize={20} circleColor='#B0A2EB' lineColor='#B0A2EB' timeStyle={{
           textAlign: 'center',
-          backgroundColor: '#6ebcbc',
+          backgroundColor: '#97C7E8',
           color: 'white',
           padding: 5,
           borderRadius: 13
@@ -83,7 +82,7 @@ export default class BasicTimeLine extends Component {
           marginBottom: 20,
           paddingLeft: 5,
           paddingRight: 5,
-          backgroundColor: "#def9ff",
+          backgroundColor: "#D4FDFE",
           borderRadius: 10
         }} columnFormat='two-column' />
       </View>
@@ -101,26 +100,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 0.2,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between'
   },
   btns: {
-    alignItems: 'center',
-    backgroundColor: '#009688',
-    flexDirection: 'row',
+    textAlign: 'center',
+    backgroundColor: '#D69EF5',
     color: '#ffff',
-    width: '45%',
-    height: 40
-  },
-  bt: {
-  
-    backgroundColor: '#009688',
-    color: '#ffff',
-    flexDirection: 'column',
-    width: '45%',
-    height: 40
+    width: '32%',
+    height: 30
   },
   textStyle: {
+    paddingTop: 5,
+    paddingBottom: 5,
     textAlign: 'center',
     color: '#fff'
   }

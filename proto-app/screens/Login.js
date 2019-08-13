@@ -43,24 +43,18 @@ export default class Login extends Component {
 
                     if (responseJson == 'Pai') {//parente
                         global.EMAIL = this.state.email;
-                        global.TYPE_USER = 0;
+                        global.TYPE_USER = PARENTE;
                         this.props.navigation.navigate('Dashboard');
-
-
                     }
                     else if (responseJson == 'Monitor') {   //monitor
-                        global.TYPE_USER = 1;
+                        global.TYPE_USER = MONITOR;
                         this.props.navigation.navigate('Dashboard');
-
-
                     }
                     else {
                         Alert.alert("Email ou Senha Invalidos");
                     }
-
                 }).catch((error) => {
                     console.error(error);
-
                     this.setState({ isLoading: false });
                 });
         }
@@ -105,14 +99,14 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#6ebcbc',
+        backgroundColor: '#8C76E8',
         justifyContent: 'center',
     },
     TouchableOpacityStyle:
     {
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: '#009688',
+        backgroundColor: '#D69EFF',
         marginBottom: 20,
         width: '100%',
         textAlign: 'left',
@@ -136,16 +130,9 @@ const styles = StyleSheet.create({
     formContainer: {
         justifyContent: 'center',
     },
-    buttonContainer: {
-        backgroundColor: '#3b8181',
-        paddingVertical: 10,
-        textAlign: 'center',
-        color: '#f5f6fa',
-        fontWeight: '700',
-    },
     TextInput: {
         height: 40,
-        backgroundColor: '#a8d7d7',
+        backgroundColor: '#ABB9FF',
         marginBottom: 20,
         color: '#f5f6fa',
         paddingHorizontal: 10,
