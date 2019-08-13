@@ -4,6 +4,7 @@ import { AppRegistry, StyleSheet, ActivityIndicator, ListView, Text, View, Alert
 
 import Timeline from 'react-native-timeline-listview';
 
+global.EMAIL="";
 
 export default class App extends React.Component {
 
@@ -21,7 +22,8 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        if(global.TYPE_USER== 1){
+		  
+      if(global.TYPE_USER == 1){
             return fetch('https://coworkingsegunda.000webhostapp.com/appConsultaOcorrencia.php').then((response) => response.json()).then((responseJson) => {
                 let ds = new ListView.DataSource({
                     rowHasChanged: (r1, r2) => r1 !== r2
@@ -34,42 +36,45 @@ export default class App extends React.Component {
                 });
                 
             })
-        }else{
-            return fetch('https://coworkingsegunda.000webhostapp.com/appConsultaOcorrenciaPai.php',
+        } else {
+
+
+        return fetch('https://coworkingsegunda.000webhostapp.com/appConsultaOcorrenciaPai.php',
+            {
+                method: 'POST',
+                headers: 
                 {
-                    method: 'POST',
-                    headers: 
-                    {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(
-                    {
-                      EMAIL : global.EMAIL
-                    })
-     
-                }).then((response) => response.json()).then((responseJsonFromServer) =>
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(
                 {
-                     let ds = new ListView.DataSource({
-                        rowHasChanged: (r1, r2) => r1 !== r2
-                    });
-                    
-                          this.setState({
-                        isLoading: false,
-                        dataSource: ds.cloneWithRows(responseJsonFromServer)
-                    }, function() {
-                        // In this block you can do something with new state.
-                    });
-    
-                }).catch((error) =>
-                {
-                    Alert.alert('Servidor não respondeu. Verifique sua conexão com a Internet.');
-    
-                    this.setState({ ActivityIndicator_Loading : false});
+                  EMAIL : global.EMAIL
+                })
+ 
+            }).then((response) => response.json()).then((responseJsonFromServer) =>
+            {
+                 let ds = new ListView.DataSource({
+                    rowHasChanged: (r1, r2) => r1 !== r2
                 });
-            
-                
-            }
+				
+				      this.setState({
+                    isLoading: false,
+                    dataSource: ds.cloneWithRows(responseJsonFromServer)
+                }, function() {
+                    // In this block you can do something with new state.
+                });
+
+            }).catch((error) =>
+            {
+                Alert.alert('Servidor não respondeu. Verifique sua conexão com a Internet.');
+
+                this.setState({ ActivityIndicator_Loading : false});
+            });
+        
+			
+        }
+       
     }
 
     ListViewItemSeparator = () => {
@@ -98,10 +103,11 @@ export default class App extends React.Component {
                         flexDirection: 'column'
                     }}>
 
-                    <TouchableOpacity onPress={this.GetItem.bind(this, rowData.descricao)}>
+                    <TouchableOpacity onPress={this.GetItem.bind(this, rowData.id_recado)}>
                         <Text style={styles.textViewContainer}>{'Descrição = ' + rowData.descricao}</Text>
-                        <Text style={styles.textViewContainer}>{'Id Aluno = ' + rowData.id_aluno}</Text>
-                        <Text style={styles.textViewContainer}>{'Data = ' + rowData.Data}</Text>
+                        <Text style={styles.textViewContainer}>{'Nome do Aluno = ' + rowData.nome_do_aluno}</Text>
+                        <Text style={styles.textViewContainer}>{'Data = ' + rowData.data}</Text>
+                        <Text style={styles.textViewContainer}>{'Horario = ' + rowData.horario}</Text>
                         <Text style={styles.textViewContainer}>{'Responsavel = ' + rowData.responsavel}</Text>
                     </TouchableOpacity>
                 </View>}/>
