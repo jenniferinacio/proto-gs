@@ -21,7 +21,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        if(global.EMAIL == null){
+        if(global.TYPE_USER== 1){
             return fetch('https://coworkingsegunda.000webhostapp.com/appConsultaOcorrencia.php').then((response) => response.json()).then((responseJson) => {
                 let ds = new ListView.DataSource({
                     rowHasChanged: (r1, r2) => r1 !== r2
