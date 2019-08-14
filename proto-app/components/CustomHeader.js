@@ -12,7 +12,7 @@ const CustomHeader = props => {
       }}
     >
       <LinearGradient
-        colors={["#009688", "#6ebcbc"]}
+        colors={["#8C76E8", "#8C76E8"]}
       >
         <Header {...props} />
       </LinearGradient>

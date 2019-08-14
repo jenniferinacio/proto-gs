@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, TextInput, Text, ActivityIndicator, TouchableOpacity, Alert, Picker, Button } from 'react-native';
+import { StyleSheet, View, TextInput, Text, ActivityIndicator, TouchableOpacity, Alert, Picker, Button, KeyboardAvoidingView } from 'react-native';
 
 export default class App extends Component<{}>
 {
@@ -41,6 +41,7 @@ export default class App extends Component<{}>
   }
   render() {
     return (
+      <KeyboardAvoidingView behavior={'padding'} style={styles.container}>
       <View style={styles.MainContainer}>
 
         <Text style={styles.TextStyleClass} >Cadastro de Recados</Text>
@@ -75,15 +76,21 @@ export default class App extends Component<{}>
           <Text style={styles.TextStyle}>Cadastrar Recado</Text>
         </TouchableOpacity>
         {
-          this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#009688' size='large' style={styles.ActivityIndicatorStyle} /> : null
+          this.state.ActivityIndicator_Loading ? <ActivityIndicator color='#8C76E8' size='large' style={styles.ActivityIndicatorStyle} /> : null
         }
-      </View>
+        </View>
+        </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = StyleSheet.create(
   {
+    container: {
+      flex: 1,
+      backgroundColor: '#8C76E8',
+      justifyContent: 'center',
+  },
     MainContainer:
     {
       flex: 1,
@@ -101,7 +108,7 @@ const styles = StyleSheet.create(
       backgroundColor: "#fff",
       marginBottom: 10,
       width: '95%',
-      color: '#009688',
+      color: '#8C76E8',
       fontSize: 20
     },
     TextInputStyleClass:
@@ -111,7 +118,7 @@ const styles = StyleSheet.create(
       height: 40,
       backgroundColor: "#fff",
       borderWidth: 1,
-      borderColor: '#009688',
+      borderColor: '#8C76E8',
       borderRadius: 7,
       marginBottom: 10,
       width: '95%'
@@ -121,7 +128,7 @@ const styles = StyleSheet.create(
     {
       paddingTop: 10,
       paddingBottom: 10,
-      backgroundColor: '#009688',
+      backgroundColor: '#8C76E8',
       marginBottom: 20,
       width: '90%'
 

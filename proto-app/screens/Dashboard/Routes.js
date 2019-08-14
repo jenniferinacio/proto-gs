@@ -80,8 +80,7 @@ const Tab2 = createStackNavigator(
 
 const DashboardTabRoutes = TabNavigator(
   {
-    FeedScreen: FeedScreen,
-    Tab1: Tab1
+    FeedScreen: FeedScreen
   },
   {
     initialRouteName: "FeedScreen",
@@ -98,8 +97,6 @@ const DashboardTabRoutes = TabNavigator(
             iconName = `ios-settings`;
           }
 
-          // You can return any component that you like here! For demo we use an
-          // icon component from react-native-vector-icons
           return <Ionicons name={iconName} size={25} color={tintColor} />;
         },
         tabBarVisible:
@@ -109,8 +106,8 @@ const DashboardTabRoutes = TabNavigator(
       };
     },
     tabBarOptions: {
-      activeTintColor: "#428585",
-      inactiveTintColor: "#98dada",
+      activeTintColor: "#8C76E8",
+      inactiveTintColor: "#ABB9FF",
       style: {
         height: 60,
         paddingVertical: 5,
