@@ -6,7 +6,7 @@ import Timeline from 'react-native-timeline-listview';
 
 global.EMAIL="";
 
-export default class App extends React.Component {
+export default class Ocorrencia extends React.Component {
 
     constructor(props) {
         super(props);
@@ -136,5 +136,3 @@ const styles = StyleSheet.create({
     }
 
 });
-
-AppRegistry.registerComponent('App', () => App);

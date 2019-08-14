@@ -34,6 +34,11 @@ export default class BasicTimeLine extends Component {
       cadButtons = <View style={styles.buttonsArea}>
         <TouchableOpacity style={styles.btns}
           onPress={() => {
+            this.props.navigation.navigate("screenCadRecado")
+          }}><Text style={styles.textStyle}><Icon name={'ios-today'} size={20}/>
+             Recado</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.btns}
+          onPress={() => {
             this.props.navigation.navigate("screenCadAtividade")
           }}><Text style={styles.textStyle}>
             <Icon name={'ios-stopwatch'} size={20}/>
@@ -43,11 +48,6 @@ export default class BasicTimeLine extends Component {
             this.props.navigation.navigate("screenCadOcorrencia")
           }}><Text style={styles.textStyle}><Icon name={'ios-information-circle-outline'} size={20}/>
              Ocorrência</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.btns}
-          onPress={() => {
-            this.props.navigation.navigate("screenCadRecado")
-          }}><Text style={styles.textStyle}><Icon name={'ios-today'} size={20}/>
-             Recado</Text></TouchableOpacity>
       </View>
 
     } else {

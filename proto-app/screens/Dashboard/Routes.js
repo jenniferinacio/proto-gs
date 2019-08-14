@@ -12,6 +12,8 @@ import Tab1Details from "./Tabs/Tab1Details";
 import Tab2Screen from "./Tabs/Tab2Screen";
 import CustomHeader from "../../components/CustomHeader";
 import HeaderStyles from "../../headerStyles";
+import Ocorrencia from './Tabs/Feed/Ocorrencia';
+import Recado from './Tabs/Feed/Recado';
 
 
 let headerDefaultNavigationConfig = {
@@ -60,13 +62,29 @@ const Tab1 = createStackNavigator(
   }
 );
 
-const Tab2 = createStackNavigator(
+const Ocorrencias = createStackNavigator(
   {
-    Tab2: {
-      screen: Tab2Screen,
+    OcorrenciaScreen: {
+      screen: Ocorrencia,
       navigationOptions: {
         headerLeft: null,
-        headerTitle: "Tab 2 Screen"
+        headerTitle: "Ocorrencias"
+      }
+    }
+  },
+  {
+    navigationOptions: {
+      ...headerDefaultNavigationConfig
+    }
+  }
+);
+const Recados = createStackNavigator(
+  {
+    RecadoScreen: {
+      screen: Recado,
+      navigationOptions: {
+        headerLeft: null,
+        headerTitle: "Recados"
       }
     }
   },
@@ -80,7 +98,9 @@ const Tab2 = createStackNavigator(
 
 const DashboardTabRoutes = TabNavigator(
   {
-    FeedScreen: FeedScreen
+    Recados: Recados,
+    FeedScreen: FeedScreen,
+    Ocorrencias: Ocorrencias,
   },
   {
     initialRouteName: "FeedScreen",
@@ -93,8 +113,10 @@ const DashboardTabRoutes = TabNavigator(
           let iconName;
           if (routeName === 'FeedScreen') {
             iconName = `ios-paper`;
-        } else if (routeName === 'Tab1') {
-            iconName = `ios-settings`;
+          } else if (routeName === 'Recados') {
+            iconName = `ios-today`;
+          } else if (routeName === 'Ocorrencias') {
+            iconName = `ios-information-circle-outline`;
           }
 
           return <Ionicons name={iconName} size={25} color={tintColor} />;
