@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, ActivityIndicator, ListView, Text, View, Alert, Platform, TouchableOpacity } from 'react-native';
 //import Recado from "./Recado";
 
 import Timeline from 'react-native-timeline-listview';
 
-global.EMAIL="";
+global.EMAIL = "";
 
-export default class App extends React.Component {
+export default class Recado extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,8 +22,8 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-		  
-      if(global.TYPE_USER == 1){
+
+        if (global.TYPE_USER == 1) {
             return fetch('https://coworkingsegunda.000webhostapp.com/consultaRecados.php').then((response) => response.json()).then((responseJson) => {
                 let ds = new ListView.DataSource({
                     rowHasChanged: (r1, r2) => r1 !== r2
@@ -31,77 +31,75 @@ export default class App extends React.Component {
                 this.setState({
                     isLoading: false,
                     dataSource: ds.cloneWithRows(responseJson)
-                }, function() {
+                }, function () {
                     // In this block you can do something with new state.
                 });
-                
+
             })
         } else {
 
 
-        return fetch('https://coworkingsegunda.000webhostapp.com/appConsultaRecadosPai.php',
-            {
-                method: 'POST',
-                headers: 
+            return fetch('https://coworkingsegunda.000webhostapp.com/appConsultaRecadosPai.php',
                 {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(
-                {
-                  EMAIL : global.EMAIL
-                })
- 
-            }).then((response) => response.json()).then((responseJsonFromServer) =>
-            {
-                 let ds = new ListView.DataSource({
-                    rowHasChanged: (r1, r2) => r1 !== r2
-                });
-				
-				      this.setState({
-                    isLoading: false,
-                    dataSource: ds.cloneWithRows(responseJsonFromServer)
-                }, function() {
-                    // In this block you can do something with new state.
+                    method: 'POST',
+                    headers:
+                    {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(
+                        {
+                            EMAIL: global.EMAIL
+                        })
+
+                }).then((response) => response.json()).then((responseJsonFromServer) => {
+                    let ds = new ListView.DataSource({
+                        rowHasChanged: (r1, r2) => r1 !== r2
+                    });
+
+                    this.setState({
+                        isLoading: false,
+                        dataSource: ds.cloneWithRows(responseJsonFromServer)
+                    }, function () {
+                        // In this block you can do something with new state.
+                    });
+
+                }).catch((error) => {
+                    Alert.alert('Servidor não respondeu. Verifique sua conexão com a Internet.');
+
+                    this.setState({ ActivityIndicator_Loading: false });
                 });
 
-            }).catch((error) =>
-            {
-                Alert.alert('Servidor não respondeu. Verifique sua conexão com a Internet.');
 
-                this.setState({ ActivityIndicator_Loading : false});
-            });
-        
-			
         }
-       
+
     }
 
     ListViewItemSeparator = () => {
         return (<View style={{
 
-                height: .5,
-                width: "100%",
-                backgroundColor: "#000"
-            }}/>);
+            height: .5,
+            width: "100%",
+            backgroundColor: "#000"
+        }} />);
     }
 
     render() {
         if (this.state.isLoading) {
             return (<View style={{
-                    flex: 1,
-                    paddingTop: 20
-                }}>
-                <ActivityIndicator/>
+                flex: 1,
+                paddingTop: 20
+            }}>
+                <ActivityIndicator />
             </View>);
         }
 
-        return (<View style={styles.MainContainer}>
-
-            <ListView dataSource={this.state.dataSource} renderSeparator={this.ListViewItemSeparator} renderRow={(rowData) => <View style={{
-                        flex: 1,
-                        flexDirection: 'column'
-                    }}>
+        return (
+            <View style={styles.MainContainer}>
+                <ListView dataSource={this.state.dataSource} renderSeparator={this.ListViewItemSeparator} renderRow={(rowData) => <View style={{
+                    flex: 1,
+                    flexDirection: 'column'
+                }}>
 
                     <TouchableOpacity onPress={this.GetItem.bind(this, rowData.id_recado)}>
                         <Text style={styles.textViewContainer}>{'Descrição = ' + rowData.descricao}</Text>
@@ -109,8 +107,8 @@ export default class App extends React.Component {
                         <Text style={styles.textViewContainer}>{'id_turma = ' + rowData.id_turma}</Text>
                         <Text style={styles.textViewContainer}>{'Responsavel = ' + rowData.responsavel}</Text>
                     </TouchableOpacity>
-                </View>}/>
-        </View>);
+                </View>} />
+            </View>);
     }
 }
 
@@ -135,5 +133,3 @@ const styles = StyleSheet.create({
     }
 
 });
-
-AppRegistry.registerComponent('App', () => App);
