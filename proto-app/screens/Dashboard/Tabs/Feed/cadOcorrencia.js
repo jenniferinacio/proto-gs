@@ -29,7 +29,7 @@ export default class CadAtividade extends Component<{}>
             {
               Descricao: this.state.Descricao,
               Id_aluno: this.state.Id_Aluno,
-              Data: this.state.Data,
+              Data: this.state.Data.split('/').reverse().join('/'),
               Horario: this.state.Horario,
               Responsavel: this.state.Responsavel
             })
