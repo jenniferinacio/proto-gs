@@ -28,7 +28,7 @@ export default class CadAtividade extends Component<{}>
             {
               Tipo_de_atividade: this.state.Tipo_de_atividade,
               Descricao: this.state.Descricao,
-              Data: this.state.Data,
+              Data: this.state.Data.split('/').reverse().join('/'),
               Horario: this.state.Horario
             })
 
